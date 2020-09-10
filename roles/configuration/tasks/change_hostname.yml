@@ -1,0 +1,31 @@
+- name: "Update Hostnames"
+  hostname:
+    name: "{{ new_hostname }}"
+- name: 'Add hostname to /etc/hosts'
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.0\.1[ \t]+localhost'
+    line: '127.0.0.1 localhost {{ new_hostname }}'
+    state: present
+
+- name: check hostnames 
+  shell: hostname
+  register: hname
+- debug: var=hname
+
+- name: Add ips
+  blockinfile:
+    path: /etc/hosts
+    marker: "## added here ##"
+    insertafter: 'ff02::3 ip6-allhosts'
+    state: present
+    block: |
+      172.31.12.118    localhost    vm01
+      172.31.7.66    localhost    vm02
+- name: ping servers
+  shell: ping vm01 -c 1 && ping vm02 -c 1
+  register: ping_output
+
+- debug: var=ping_output
+
+

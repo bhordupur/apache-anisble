@@ -1,0 +1,5 @@
+- name: print kernel info
+  shell: uname -r
+  register: kernel_output
+
+- debug: var=kernel_output

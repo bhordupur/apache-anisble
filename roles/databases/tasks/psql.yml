@@ -1,0 +1,20 @@
+- name: install postgresql 9
+  apt:
+    name: postgresql
+    state: present
+  tags: psql_pkg
+
+- name: make sure psql service runs
+  service: name=postgresql state=started enabled=yes
+  tags: psql_conf
+
+- name: check version after installation
+  shell: psql --version
+  register: psql_version
+
+- debug: msg="{{ psql_version }}"
+
+- name: print kernel info
+  include_role:
+    name: ../common
+    tasks_from: kernel_output.yml

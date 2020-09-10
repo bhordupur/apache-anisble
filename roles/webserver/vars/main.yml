@@ -1,0 +1,9 @@
+apache_default_http_port: "80"
+apache_custom_http_port: "8080"
+apache_state: "started"
+apache_restart_state: "restarted"
+app_user: ubuntu
+app_group: ubuntu
+http_host: "myhost"
+disable_default: true
+http_conf: "my_domain.conf"

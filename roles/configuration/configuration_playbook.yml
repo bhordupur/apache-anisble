@@ -1,0 +1,7 @@
+---
+- name: set bnasic conf
+  hosts: all
+  become: yes
+  gather_facts: no
+  roles:
+    - ../configuration
